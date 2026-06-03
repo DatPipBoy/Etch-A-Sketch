@@ -9,7 +9,8 @@
 #options {
     display: flex;
     justify-content: space-evenly;
-    padding: 50px;
+    padding-top: 50px;
+    padding-bottom: 50px;
 }
 
 #sketchPad {
@@ -31,4 +32,5 @@
     flex: 1 1 auto;
     border: 1px solid black;
     color: white;
+    
 }
