@@ -27,7 +27,7 @@
     color: white;
 }
 
-.squares {
+.square {
     display: flex;
     flex: 1 1 auto;
     border: 1px solid black;

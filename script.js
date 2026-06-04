@@ -51,20 +51,22 @@ reset.addEventListener("click", () => {
 
 //Mouse interaction
 
-let squares = document.querySelectorAll(".squares");
-
 sketchPad.addEventListener("mouseover", (e) => {
-    if(e.target.classList.contains("squares") && rgb.checked == false && gradient.checked == false) {
-        e.target.style.backgroundColor = "black";
-    } else if (e.target.classList.contains("squares") && rgb.checked == true && gradient.checked == false) {
-        e.target.style.backgroundColor = randomColor();
-    } else if (e.target.classList.contains("squares") && rgb.checked == false && gradient.checked == true) {
-        const currentOpacity = parseFloat(e.target.dataset.opacity) || 0;
+    const target = e.target;
+    // guard clause
+    if (!target.classList.contains("square")) return;
+
+    if (!rgb.checked && !gradient.checked) {
+        target.style.backgroundColor = "black";        
+    } else if (rgb.checked && !gradient.checked) {
+        target.style.backgroundColor = randomColor();        
+    } else if (gradient.checked) {
+        const currentOpacity = parseFloat(target.dataset.opacity) || 0;
         const newOpacity = Math.min(currentOpacity + 0.1, 1);
         
-        e.target.style.backgroundColor = `rgba(0, 0, 0, ${newOpacity})`;
-        e.target.dataset.opacity = newOpacity;
-    }    
+        target.style.backgroundColor = `rgba(0, 0, 0, ${newOpacity})`;
+        target.dataset.opacity = newOpacity;
+    }   
 });
 
 //Functions
@@ -76,19 +78,15 @@ function newSketchPad() {
         sketchPad.appendChild(columns);
 
         for(let j = 0;j < gridSize;j++){
-            const squares = document.createElement("div");
-            squares.classList.add("squares");
-            columns.appendChild(squares);
+            const square = document.createElement("div");
+            square.classList.add("square");
+            columns.appendChild(square);
         }
     }
 }
 
 function clearSketchPad() {
-    const columns = document.getElementsByClassName("columns");
-    
-    while (columns.length > 0){
-        columns[0].remove();
-    }
+    sketchPad.innerHTML = "";
 }
 
 function randomColor() {
